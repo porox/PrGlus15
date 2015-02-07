@@ -1,7 +1,9 @@
 #include <iostream>
 #include <iomanip>
 #include <locale>
+#include <fstream>
 using namespace std;
+ 
 
 
  struct  source { 
@@ -21,7 +23,8 @@ class ListNode
         List *Head;
 		ifstream FileOut;
 		ofstream  FileIn;
-		string NameFile ='.\DB.txt';
+		 string  NameFile ;
+		 int Count; 
  
     public:
 	
@@ -29,6 +32,7 @@ class ListNode
 
 bool FileWrite()
 		{
+			NameFile= " DB";
 			int sizeAdress;
 			int sizeTelNumber;
 			try
@@ -38,7 +42,7 @@ bool FileWrite()
 
 				if (Head != NULL)
 				{
-					FileIn.open(NameFile, ios_base::binary | ios::out);
+					FileIn.open((char*)&NameFile, ios_base::binary | ios::out);
 					
 					FileIn.write((char*)&Count, sizeof(int));
 					while (temp != NULL)
@@ -70,7 +74,8 @@ bool FileWrite()
 		}
 
 		bool FileRead()
-		{
+		{	
+			NameFile= "BD";
 			int sizeAdress=0;
 			int sizeTelNumber=0;
 			bool out = true;
@@ -80,7 +85,7 @@ bool FileWrite()
 			try
 			{
 
-					FileOut.open(NameFile, ios_base::binary | ios::in);
+					FileOut.open((char*)&NameFile, ios_base::binary | ios::in);
 					if (FileOut.is_open()) {
 
 						FileOut.read((char*)&Col, sizeof(int));
@@ -98,7 +103,7 @@ bool FileWrite()
 							tmp1[sizeTelNumber] = '\0';
 							FileOut.read(tmp1, sizeof(char)*sizeTelNumber);
 							data.TelNumber = (string)tmp1;
-							
+					
 							add(data);
 							i++;
 						}
@@ -122,6 +127,7 @@ bool FileWrite()
             {
                 Head = Ptr;
                 Ptr -> next = NULL;
+				Count=1;
             }
             else
             {
@@ -132,7 +138,7 @@ bool FileWrite()
                 
                 temp -> next = Ptr;
                 Ptr -> next = NULL;
-               
+               	Count++;
             }
         }
  

@@ -1,9 +1,7 @@
-#include <tchar.h>
 #include "material.cpp"
-#include <conio.h>
 #include <stdio.h>
 #include <iostream>
-#include <windows.h>
+
 using namespace std;
 
 void ClearScreen()
@@ -77,7 +75,9 @@ int  main()
 			cout << "Delete(2)" << "\n";
 			cout << "Change(3)" << "\n";
 			cout << "Show list(4)" << "\n";
-			cout << "Exit(5)" << "\n";
+			cout << "File write(5)" << "\n";
+			cout << "File read(6)" << "\n";
+			cout << "Exit(7)" << "\n";
 			cin >> i;
 			break;
 
@@ -119,14 +119,11 @@ int  main()
 			/* Просмотр */
 			 ClearScreen();
 			DB.showList();
-			getch();
+			//getch();
 			i = '0';
 			break;
 
-		case '5':
-			/* Выход */
-			 ClearScreen();
-			break;
+
 	case '5':
 			/*Запись в фаил*/
 			ClearScreen();
@@ -150,7 +147,7 @@ int  main()
 
 		case '7':
 			/* Выход */
-			system("cls");
+			ClearScreen();
 			break;
 		default:
 			cout << "You entered the wrong character!  Try again"<<"\n";
@@ -159,7 +156,7 @@ int  main()
 			break;
 		}
 
-	} while (i != '5');
+	} while (i != '7');
 	
 	return 0;
 }
