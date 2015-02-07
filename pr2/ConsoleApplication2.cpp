@@ -2,44 +2,12 @@
 #include <stdio.h>
 #include <iostream>
 
+ #include <stdlib.h>
+     #include <termios.h>
+     #include <string.h>
+#define ClearScreen() printf("\033[H\033[J")
 using namespace std;
 
-void ClearScreen()
-  {
-  HANDLE                     hStdOut;
-  CONSOLE_SCREEN_BUFFER_INFO csbi;
-  DWORD                      count;
-  DWORD                      cellCount;
-  COORD                      homeCoords = { 0, 0 };
-
-  hStdOut = GetStdHandle( STD_OUTPUT_HANDLE );
-  if (hStdOut == INVALID_HANDLE_VALUE) return;
-
-  /* Get the number of cells in the current buffer */
-  if (!GetConsoleScreenBufferInfo( hStdOut, &csbi )) return;
-  cellCount = csbi.dwSize.X *csbi.dwSize.Y;
-
-  /* Fill the entire buffer with spaces */
-  if (!FillConsoleOutputCharacter(
-    hStdOut,
-    (TCHAR) ' ',
-    cellCount,
-    homeCoords,
-    &count
-    )) return;
-
-  /* Fill the entire buffer with the current colors and attributes */
-  if (!FillConsoleOutputAttribute(
-    hStdOut,
-    csbi.wAttributes,
-    cellCount,
-    homeCoords,
-    &count
-    )) return;
-
-  /* Move the cursor home */
-  SetConsoleCursorPosition( hStdOut, homeCoords );
-  }
   
 source dataSet(){
 	source tmp;
@@ -61,6 +29,7 @@ int  main()
 {
 	char i = '0';
 	int id;
+	char tmp;
 
 	ListNode DB;
 
@@ -120,6 +89,7 @@ int  main()
 			 ClearScreen();
 			DB.showList();
 			//getch();
+			cin>>tmp;
 			i = '0';
 			break;
 
@@ -152,7 +122,7 @@ int  main()
 		default:
 			cout << "You entered the wrong character!  Try again"<<"\n";
 			i = '0';
-			getch();
+			//getch();
 			break;
 		}
 
