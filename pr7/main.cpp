@@ -68,6 +68,20 @@ public:
 			cout << "list is empty!" << "\n";
 	}
 
+	void clear(){
+		List *temp = Head;
+ 		 List *cur = NULL;
+            if(Head != NULL)
+            {
+                while(temp != NULL)
+                {
+               	    cur=   temp ;
+	                    temp = temp -> next;
+          	    delete cur;
+		 }
+            }	
+	}
+
 	void  AddCoube ()             //добавление в указанную
 	{
 		if (Head != NULL)
@@ -147,13 +161,11 @@ public:
 };
 int dataSet(){
 	int tmp;
-	bool check;
-	check=true;
-	while (check){
+	while (!(cin>>tmp)){
 		
 			cerr << "Error while reading the integer value " << endl;
-			
-		if (cin >> tmp){ check= false; cin>>tmp;}; 
+			cin.clear();
+			while (cin.get() !='\n'); //clear 
 	}
 	return tmp;
 }
@@ -230,7 +242,7 @@ int  main()
 		}
 
 	} while (i != '6');
-
+	DB.clear();
 	return 0;
 }
 
