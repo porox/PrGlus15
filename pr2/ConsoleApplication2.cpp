@@ -12,10 +12,12 @@ using namespace std;
 source dataSet(){
 	source tmp;
 	cout << "Enter id library" << "\n";
-	while (!(cin >> tmp.id) || (tmp.id < 0)){
+	cin >> tmp.id;
+	while ((tmp.id < 0)){
 	cerr << "Error while reading the integer value > 0" << endl;
 	cin.clear();
 	cin.sync();
+	cin >> tmp.id;
 	}
 	cout << "Enter  Adress  library " << "\n";
 	cin >> tmp.Adress;
@@ -44,9 +46,7 @@ int  main()
 			cout << "Delete(2)" << "\n";
 			cout << "Change(3)" << "\n";
 			cout << "Show list(4)" << "\n";
-			cout << "File write(5)" << "\n";
-			cout << "File read(6)" << "\n";
-			cout << "Exit(7)" << "\n";
+			cout << "Exit(5)" << "\n";
 			cin >> i;
 			break;
 
@@ -93,31 +93,11 @@ int  main()
 			i = '0';
 			break;
 
-
 	case '5':
-			/*Запись в фаил*/
-			ClearScreen();
-			if (!(DB.FileWrite()))
-			{
-				cerr << "File error!!" << endl;
-			}
-			i = '0';
-			break;
-
-		case '6':
-			/*Запись в фаил*/
-			ClearScreen();
-			if (!(DB.FileRead()))
-			{
-				cerr << "File error!!" << endl;
-				
-			}
-			i = '0';
-			break;
-
-		case '7':
 			/* Выход */
-			ClearScreen();
+			DB.clear();
+			cin>>tmp;
+			ClearScreen();	
 			break;
 		default:
 			cout << "You entered the wrong character!  Try again"<<"\n";
@@ -126,8 +106,8 @@ int  main()
 			break;
 		}
 
-	} while (i != '7');
-	
+	} while (i != '5');
+	DB.clear();	
 	return 0;
 }
 
