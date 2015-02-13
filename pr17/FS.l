@@ -4,19 +4,18 @@
 %}
 
 %%
-[Rr][Ee][Aa][Dd]                    return TOKREAD;
-[Rr][Ee][Aa][Dd][Ll][Nn]                return TOKREADLN;
-[Ww][Rr][Ii][Tt][Ee]			return TOKWRITE;
-[Ww][Rr][Ii][Tt][Ee][Ll][Nn]		return TOKWRITELN;
-\(					return TOKOPENBRACKET;
-\)					return TOKCLOSEBRACKET;
-;					return TOKENDLN;
-\'					return TOKCOMM;
-:=					return TOKASIGMENT;
-[-?+?][0-9]+				return TOKVALUEINT;
-[-?+?][0-9]+[.][0-9]+[Ee][-?+?][0-9]+	return TOKVALUEREAL;
-[a-zA-Z_][a-zA-Z_0-9]			return TOKVAR;
-[\'][.]					return TOKSTRING;
+[Rr][Ee][Aa][Dd][Ll][Nn]                			return TREADLN;
+[Rr][Ee][Aa][Dd]                    				return TREAD;
+[Ww][Rr][Ii][Tt][Ee]						return TWRITE;
+[Ww][Rr][Ii][Tt][Ee][Ll][Nn]				return TWRITELN;
+\(											return TOPENBRACKET;
+\)											return TCLOSEBRACKET;
+;											return TENDLN;
+:=											return TASIGMENT;
+[\-\+]?[1-9][0-9]*							return TVALUEINT;
+[\-\+]?[1-9][0-9]*\.[0-9]+[Ee]?[\-\+]?[0-9]?   	return TVALUEREAL;
+[a-zA-Z_][a-zA-Z_0-9]*   					return TVAR;
+[\'][^\']+[\']								return TSTRING;
 \n
-[ \t]+
+[  \t]+
 %%
