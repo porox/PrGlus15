@@ -13,9 +13,9 @@
 ;											return TENDLN;
 :=											return TASIGMENT;
 [\-\+]?[1-9][0-9]*							return TVALUEINT;
-[\-\+]?[1-9][0-9]*\.[0-9]+[Ee]?[\-\+]?[0-9]?   	return TVALUEREAL;
+[\-\+]?[1-9][0-9]*([Ee][\-\+]?[0-9]{1,})?([\.][0-9]+([Ee][\-\+]?[0-9]{1,})?)?  	return TVALUEREAL;
 [a-zA-Z_][a-zA-Z_0-9]*   					return TVAR;
-[\'][^\']+[\']								return TSTRING;
+([#][0-9]{1,})*([\']([#][0-9]{1,})*[^\']*([\'][\'])*[^\']*[\'])*([#][0-9]{1,})*		return TSTRING;
 \n
 [  \t]+
 %%
