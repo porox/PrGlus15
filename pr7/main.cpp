@@ -3,9 +3,9 @@
 #include <locale>
 #include <stdio.h>
 #include <iostream>
- #include <stdlib.h>
- #include <termios.h>
- #include <string.h>
+#include <stdlib.h>
+#include <termios.h>
+#include <string.h>
 #define ClearScreen() printf("\033[H\033[J")
 using namespace std;
 struct List{
@@ -52,25 +52,10 @@ public:
 		}
 	}
 
-	void SummElements(){
-		List *temp = Head;
-		int summ = 0; 
-		if (Head != NULL)
-		{
-			while (temp != NULL)
-			{
-				summ += temp->data;
-				temp = temp->next;
-			}
-			cout << "Summ = "<<summ<< "\n";
-		}
-		else
-			cout << "list is empty!" << "\n";
-	}
 
 	void clear(){
 		List *temp = Head;
- 		 List *cur = NULL;
+ 		List *cur = NULL;
             if(Head != NULL)
             {
                 while(temp != NULL)
@@ -82,67 +67,121 @@ public:
             }	
 	}
 
-	void  AddCoube ()             //добавление в указанную
-	{
+	void pr(){
+		List *temp = Head;
+ 		List *cur = NULL;
+		List *prev= Head;
+		int summ=Head->data;
+		bool end=false;
+            if(Head != NULL)
+            {	
+		if ((Head->data % 2)==0){delete Head; temp=Head->next; Head=temp; summ=0; }
+		while((temp->next!=NULL)){
+			cout<<"main ( "<<temp<<" data "<<temp->data<<" ; next->"<<temp->next<<")"<<"prev ( "<<prev <<"data  "<<prev->data<<" prev next "<<prev->next<<") \n";
+			if((temp->data%2)==0){
+				if (temp->next==NULL){
+					if(temp==Head){Head->next=NULL;}
+					 prev->next=NULL;
+				}
+				else{
+					if (temp==Head){
+						delete temp;
+						Head=Head->next;
+						cur=Head; 
+					}
+					else{
+						if (!((temp->data %2)==0)){prev->next=temp;} 
+						cur=temp->next;
+						cout<<"del("<<temp<<" ;data ->"<<temp->data<<"); ";
+						delete temp;
+					}
+
+					temp=cur;
+					cout<<"xyi("<<temp<<" ; data->"<<temp->data<<"); ";
+
+					if((temp->data % 2)!=0){prev->next=temp; prev=temp; cout<<"prev("<<prev<<" ;data= "<<prev->data<<")"<<"\n";}
+				} 			
+			}else {summ+=prev->data; temp=temp->next;}
+			
+		}	
+		if ((temp->data % 2)==0){ prev->next=NULL;}
+		cout<<"summ= "<<summ;
+            } else
+		 cout<<"List is empty !"<<"\n";
+	
+	}
+
+	void processing(){
+		int sum=0;
 		if (Head != NULL)
 		{
-			List *tmp = Head;
 			List *cur = NULL;
+			
+			while ( ((Head->data%2) == 0)&(Head!=NULL)) //если удаляем 1 элемент
+			{
+				if ((Head->next == NULL)) {
+								delete Head;
+								cur->next = NULL;
+							
+							}	
+							else{
+									cur= Head->next;
+									delete Head;
+							}
+				Head = cur;
+				Head=Head->next;
+			}
+			
+		if (Head != NULL)
+			{
+		
+			List *tmp = Head;
+			
 			
 			while ((tmp != NULL)){
 
 				cur = tmp;
 				tmp = tmp->next;
-				List *temp = new (List);
-				temp->data = cur->data * cur->data * cur->data;
-				temp->next = tmp;
-				cur->next = temp;
-				tmp = cur;
-				tmp = tmp->next->next;
+				
+				//dell prop 2
+					if ((tmp!=NULL)){
+						if(tmp->data %2==0){
+							if ((tmp->next == NULL)) {
+								delete tmp;
+								cur->next = NULL;
+							
+							}	
+							else{
+								
+	cur->next = tmp->next;
+									delete tmp;
+							}
+							if (cur==NULL) {break;}
+							tmp= cur->next;
+						}
+					}	
+				//
+				
+				//add coube
+				if ((cur!=NULL)){
+					if(tmp->data % 2 !=0){
+						List *temp = new (List);
+						temp->data = cur->data * cur->data * cur->data;
+						sum+=cur->data+temp->data;
+						temp->next = tmp;
+						cur->next = temp;
+							
+						tmp = cur;
+						tmp = tmp->next->next;
+					}
+				}else break;
+				//
+				
 			}
+			cout << "Summ = "<<sum<< "\n";
 			
-		}
+		}} else cout << "list is empty!" << "\n";
 	}
-
-	void delElements()
-	{
-		List *tmp = Head;
-		List *cur = NULL;
-
-		if (Head != NULL)
-		{
-			if ((Head->data)%2  == 0)                 //если удаляем 1 элемент
-			{
-				cur = Head->next;
-				delete Head;
-				Head = cur;
-			}
-			else
-			{
-				while ((tmp->next != NULL)){
-						
-				cur = tmp;
-				tmp = tmp->next;
-				if (tmp->data % 2 == 0){
-					if ((tmp->next == NULL))          
-					{				
-						delete tmp;
-						cur->next = NULL;
-						
-					}
-					else                    
-					{
-							cur->next = tmp->next;
-							delete tmp;
-					}
-					tmp = cur;
-				}
-	
-				}
-			}
-		}
-	}
-
 	void showList()
 	{
 		List *temp = Head;
@@ -165,13 +204,12 @@ int dataSet(){
 		
 			cerr << "Error while reading the integer value " << endl;
 			cin.clear();
-			while (cin.get() !='\n'); //clear 
+			while (cin.get() !='\n'); //clear
 	}
 	return tmp;
 }
 
-int  main() 	
-{	
+int main() {
 	ListNode DB;
 	char tmp;
 	char i = '0';
@@ -183,65 +221,46 @@ int  main()
 			cin.clear();
 			cin.sync();
 			cout << "Add (1)" << "\n";
-			cout << "Removing elements proportional 2(2)" << "\n";
-			cout << "Sum(3)" << "\n";
-			cout << "Add coube (4)" << "\n";
-			cout << "Show list (5)" << "\n";
-			cout << "Exit(6)" << "\n";
+			cout << "Processing(2)" << "\n";
+			cout << "Show list (3)" << "\n";
+			cout << "Exit(4)" << "\n";
 			cin >> i;
 			break;
 		case '1':
 			//add elements
 			ClearScreen();
-			cout << "Enter new  element" << "\n";
+			cout << "Enter new element" << "\n";
 			DB.add(dataSet());
 			i = '0';
-;			break;
+			break;
 		case '2':
 			//removing elements proportional 2
 			ClearScreen();
-			DB.delElements();
+			DB.pr();
+			cin>>tmp;
 			i = '0';
 			break;
 		case '3':
-			//summ elements
-			ClearScreen();
-			DB.SummElements();
-			//getch();
-			cin >>tmp;
-			i = '0';
-			break;
-		case '4':
-			//add coube
-			ClearScreen();
-			DB.AddCoube(); 
-			i = '0';
-			break;
-		case '5':
 			//Show
 			ClearScreen();
 			DB.showList();
 			//getch();
 			cin>>tmp;
 			i = '0';
-
 			break;
-		case '6':
-			//exit 
+		case '4':
+			//exit
 			ClearScreen();
 			break;
 		default:
 			cout << "You entered the wrong character!  Try again" << "\n";
-			for (int f = 1; f < 10; f++){
-				DB.add(f);
-			}
 			i = '0';
 			//getch();
 			cin>>tmp;
 			break;
 		}
 
-	} while (i != '6');
+	} while (i != '4');
 	DB.clear();
 	return 0;
 }
