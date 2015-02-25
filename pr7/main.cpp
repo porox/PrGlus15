@@ -69,42 +69,55 @@ public:
 
 	void pr(){
 		List *temp = Head;
- 		List *cur = NULL;
 		List *prev= Head;
+		List*t=NULL;
 		int summ=Head->data;
-		bool end=false;
             if(Head != NULL)
             {	
-		if ((Head->data % 2)==0){delete Head; temp=Head->next; Head=temp; summ=0; }
+		if (Head->data%2==0){
+			temp=Head->next;
+			delete Head;
+			Head=temp;
+		}
 		while((temp->next!=NULL)){
-			cout<<"main ( "<<temp<<" data "<<temp->data<<" ; next->"<<temp->next<<")"<<"prev ( "<<prev <<"data  "<<prev->data<<" prev next "<<prev->next<<") \n";
-			if((temp->data%2)==0){
-				if (temp->next==NULL){
-					if(temp==Head){Head->next=NULL;}
-					 prev->next=NULL;
-				}
-				else{
-					if (temp==Head){
-						delete temp;
-						Head=Head->next;
-						cur=Head; 
-					}
-					else{
-						if (!((temp->data %2)==0)){prev->next=temp;} 
-						cur=temp->next;
-						cout<<"del("<<temp<<" ;data ->"<<temp->data<<"); ";
-						delete temp;
-					}
-
-					temp=cur;
-					cout<<"xyi("<<temp<<" ; data->"<<temp->data<<"); ";
-
-					if((temp->data % 2)!=0){prev->next=temp; prev=temp; cout<<"prev("<<prev<<" ;data= "<<prev->data<<")"<<"\n";}
-				} 			
-			}else {summ+=prev->data; temp=temp->next;}
 			
+			cout<<temp<<"\n";
+			if ((temp->data%2)!=0){
+				prev=temp;
+			}
+			cout<<prev<<"->"<<prev->data<<"\n";
+			summ+=prev->data;
+			temp=temp->next;
+			cout<<temp<<"\n";
+				if ((temp->data%2)==0){
+				//	if ((temp->next->data % 2 )!=0){
+						if (temp->next !=NULL){
+							prev->next=temp->next;
+							delete temp;
+							temp=prev->next;
+							cout<<"dell\n";
+						}
+						else {
+							cout<<"dell_last\n";
+							prev->next=NULL;
+							delete temp;
+							break;}
+				//	}
+				//	else {
+				//		prev->next=NULL;
+				//		 t=temp->next;
+				//		 delete temp;
+				//		 temp=t;
+				//	}
+					
+				
+				}
 		}	
-		if ((temp->data % 2)==0){ prev->next=NULL;}
+		
+		if (prev->next!=NULL){
+			cout<<prev<<"->"<<prev->next->data<<"\n";		
+			//summ+=prev->next->data;
+		}	
 		cout<<"summ= "<<summ;
             } else
 		 cout<<"List is empty !"<<"\n";
