@@ -69,55 +69,77 @@ public:
 
 	void pr(){
 		List *temp = Head;
-		List *prev= Head;
+		List *prev= NULL;
 		List*t=NULL;
-		int summ=Head->data;
+		int summ=0;
+		bool k=true;
+		
             if(Head != NULL)
             {	
-		if (Head->data%2==0){
+	
+		
+			while((Head->next!=NULL)&&(Head->data%2==0)){
 			temp=Head->next;
 			delete Head;
 			Head=temp;
+			prev=Head;
+			}
+		if (Head->data%2!=0){
+			temp=Head;
+			prev=Head;
 		}
+		 else{
+			delete Head;
+			Head=NULL;
+			temp->next=NULL; 
+		} 
 		while((temp->next!=NULL)){
 			
-			cout<<temp<<"\n";
+			cout<<temp<<"temp \n";
 			if ((temp->data%2)!=0){
 				prev=temp;
+				summ+=prev->data;
 			}
-			cout<<prev<<"->"<<prev->data<<"\n";
-			summ+=prev->data;
+			cout<<prev<<"->"<<prev->data<<"prev \n";
 			temp=temp->next;
 			cout<<temp<<"\n";
 				if ((temp->data%2)==0){
-				//	if ((temp->next->data % 2 )!=0){
 						if (temp->next !=NULL){
 							prev->next=temp->next;
+							
+							cout<<temp->data<<"->"<<temp->next<<"dell\n";
 							delete temp;
 							temp=prev->next;
-							cout<<"dell\n";
+							
 						}
 						else {
 							cout<<"dell_last\n";
 							prev->next=NULL;
 							delete temp;
-							break;}
-				//	}
-				//	else {
-				//		prev->next=NULL;
-				//		 t=temp->next;
-				//		 delete temp;
-				//		 temp=t;
-				//	}
+							k=false;
+						}
 					
 				
 				}
 		}	
-		
+		if (k){ 
+			if ((temp->data%2)==0){
+				prev->next=NULL;
+				delete temp;
+			}
+		 }
 		if (prev->next!=NULL){
-			cout<<prev<<"->"<<prev->next->data<<"\n";		
-			//summ+=prev->next->data;
-		}	
+				
+			summ+=prev->next->data;
+		}
+		//if (temp!=NULL){
+		//	if (temp->data%2==0){
+		//		summ+=temp->data;
+		//		prev->next=NULL;
+		//		delete temp;
+			
+		//	}	
+		//}
 		cout<<"summ= "<<summ;
             } else
 		 cout<<"List is empty !"<<"\n";
