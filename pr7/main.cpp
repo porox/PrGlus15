@@ -54,169 +54,62 @@ public:
 
 
 	void clear(){
-		List *temp = Head;
+		
  		List *cur = NULL;
             if(Head != NULL)
             {
-                while(temp != NULL)
+		List *temp = Head;
+                while(temp)
                 {
                	    cur=   temp ;
 	                    temp = temp -> next;
           	    delete cur;
 		 }
+		
             }	
 	}
 
 	void pr(){
-		List *temp = Head;
-		List *prev= NULL;
-		List*t=NULL;
+		List *r = Head;
+		List *prev=NULL;
 		int summ=0;
-		bool k=true;
-		
-            if(Head != NULL)
-            {	
-	
-		
-			while((Head->next!=NULL)&&(Head->data%2==0)){
-			temp=Head->next;
-			delete Head;
-			Head=temp;
-			prev=Head;
+		if(Head != NULL)
+		{	
+			while((Head!=NULL)&&(Head->data%2==0)){
+				r=Head->next;
+				delete Head;
+				Head=r;
 			}
-		if (Head->data%2!=0){
-			temp=Head;
-			prev=Head;
-		}
-		 else{
-			delete Head;
-			Head=NULL;
-			temp->next=NULL; 
-		} 
-		while((temp->next!=NULL)){
-			
-			cout<<temp<<"temp \n";
-			if ((temp->data%2)!=0){
-				prev=temp;
-				summ+=prev->data;
-			}
-			cout<<prev<<"->"<<prev->data<<"prev \n";
-			temp=temp->next;
-			cout<<temp<<"\n";
-				if ((temp->data%2)==0){
-						if (temp->next !=NULL){
-							prev->next=temp->next;
-							
-							cout<<temp->data<<"->"<<temp->next<<"dell\n";
-							delete temp;
-							temp=prev->next;
-							
-						}
-						else {
-							cout<<"dell_last\n";
-							prev->next=NULL;
-							delete temp;
-							k=false;
-						}
-					
-				
+			if(Head != NULL){
+				while (r){
+				    List *next = r->next;
+				    if (r->data % 2  == 0){
+					if (prev) prev->next = next;
+					delete r;
+				    }
+				    else{
+					//cout<<prev<<" prev -> "<<prev->data<<" n"
+					List *t =new List;
+					t->data = r->data * r->data * r->data;
+					summ+=r->data+t->data;					
+					t->next=next;
+					r->next=t;
+					r=r->next;
+					//prev->next=t;
+					//prev = prev->next->next;
+					prev=r;
+				    }
+				    r = next;
+				   
 				}
-		}	
-		if (k){ 
-			if ((temp->data%2)==0){
-				prev->next=NULL;
-				delete temp;
 			}
-		 }
-		if (prev->next!=NULL){
-				
-			summ+=prev->next->data;
-		}
-		//if (temp!=NULL){
-		//	if (temp->data%2==0){
-		//		summ+=temp->data;
-		//		prev->next=NULL;
-		//		delete temp;
 			
-		//	}	
-		//}
-		cout<<"summ= "<<summ;
-            } else
-		 cout<<"List is empty !"<<"\n";
+			cout<<"summ= "<<summ;
+		} else
+		cout<<"List is empty !"<<"\n";
+	}
+
 	
-	}
-
-	void processing(){
-		int sum=0;
-		if (Head != NULL)
-		{
-			List *cur = NULL;
-			
-			while ( ((Head->data%2) == 0)&(Head!=NULL)) //если удаляем 1 элемент
-			{
-				if ((Head->next == NULL)) {
-								delete Head;
-								cur->next = NULL;
-							
-							}	
-							else{
-									cur= Head->next;
-									delete Head;
-							}
-				Head = cur;
-				Head=Head->next;
-			}
-			
-		if (Head != NULL)
-			{
-		
-			List *tmp = Head;
-			
-			
-			while ((tmp != NULL)){
-
-				cur = tmp;
-				tmp = tmp->next;
-				
-				//dell prop 2
-					if ((tmp!=NULL)){
-						if(tmp->data %2==0){
-							if ((tmp->next == NULL)) {
-								delete tmp;
-								cur->next = NULL;
-							
-							}	
-							else{
-								
-	cur->next = tmp->next;
-									delete tmp;
-							}
-							if (cur==NULL) {break;}
-							tmp= cur->next;
-						}
-					}	
-				//
-				
-				//add coube
-				if ((cur!=NULL)){
-					if(tmp->data % 2 !=0){
-						List *temp = new (List);
-						temp->data = cur->data * cur->data * cur->data;
-						sum+=cur->data+temp->data;
-						temp->next = tmp;
-						cur->next = temp;
-							
-						tmp = cur;
-						tmp = tmp->next->next;
-					}
-				}else break;
-				//
-				
-			}
-			cout << "Summ = "<<sum<< "\n";
-			
-		}} else cout << "list is empty!" << "\n";
-	}
 	void showList()
 	{
 		List *temp = Head;
